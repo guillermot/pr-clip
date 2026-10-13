@@ -2,7 +2,7 @@ import { flashBadge } from '@/lib/badge';
 import { writeClipboard } from '@/lib/clipboard';
 import { copyPr, type CopyPrResult } from '@/lib/copy-pr';
 import { extractPr } from '@/lib/extract-pr';
-import { DEFAULT_TEMPLATE } from '@/lib/template';
+import { templateSetting } from '@/lib/settings';
 
 const ERROR_MESSAGES: Record<Exclude<CopyPrResult, { ok: true }>['reason'], string> = {
   'not-a-pr': 'Open a GitHub pull request to copy it.',
@@ -27,7 +27,7 @@ async function handleClick(tab: Browser.tabs.Tab): Promise<void> {
       });
       return injection?.result;
     },
-    getTemplate: () => Promise.resolve(DEFAULT_TEMPLATE),
+    getTemplate: () => templateSetting.getValue(),
     writeClipboard,
   });
 

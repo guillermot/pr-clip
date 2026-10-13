@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="manifest.open_in_tab" content="true" />
+    <title>PR Clip options</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <img src="/icon/48.png" alt="" width="40" height="40" />
+        <div>
+          <h1>PR Clip</h1>
+          <p class="muted">Choose how pull requests are copied.</p>
+        </div>
+      </header>
+
+      <form id="template-form">
+        <section>
+          <label for="template"><h2>Message template</h2></label>
+          <textarea id="template" rows="3" spellcheck="false" required></textarea>
+
+          <p class="muted">Click a placeholder to insert it:</p>
+          <ul id="placeholders" class="placeholders"></ul>
+        </section>
+
+        <section>
+          <h2>Preview</h2>
+          <output id="preview" for="template" class="preview"></output>
+        </section>
+
+        <div class="actions">
+          <button type="submit" class="primary">Save</button>
+          <button type="button" id="reset">Reset to default</button>
+          <span id="status" role="status" class="muted"></span>
+        </div>
+      </form>
+
+      <section>
+        <h2>Keyboard shortcut</h2>
+        <p>
+          Current shortcut: <kbd id="shortcut">Not set</kbd>
+          <a href="#" id="open-shortcuts">Change</a>
+        </p>
+      </section>
+    </main>
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>
