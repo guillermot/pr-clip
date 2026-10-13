@@ -1,0 +1,44 @@
+name: Bug report
+description: Something doesn't work as expected
+labels: [bug]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you expect, and what did you get? Include the copied text if any.
+    validations:
+      required: true
+  - type: input
+    id: pr-url
+    attributes:
+      label: Pull request URL
+      description: A public PR where it happens, if possible. For private repos, describe the page instead.
+  - type: dropdown
+    id: page
+    attributes:
+      label: Which PR tab were you on?
+      options:
+        - Conversation
+        - Commits
+        - Files changed
+        - Other
+  - type: dropdown
+    id: badge
+    attributes:
+      label: What did the icon show?
+      options:
+        - Green ✓ (but the text was wrong)
+        - Red ! (please paste the tooltip below)
+        - Nothing
+  - type: textarea
+    id: tooltip
+    attributes:
+      label: Error tooltip / screenshot
+  - type: input
+    id: versions
+    attributes:
+      label: PR Clip and Chrome versions
+      placeholder: PR Clip 1.0.0, Chrome 141
+    validations:
+      required: true
