@@ -1,0 +1,55 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family:
+    'Inter',
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    sans-serif;
+  color: #0f172a;
+  -webkit-font-smoothing: antialiased;
+}
+
+.stage {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 15% 20%, rgb(255 255 255 / 18%), transparent 45%),
+    linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: #fff;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-weight: 700;
+}
+
+.card {
+  border-radius: 14px;
+  background: #fff;
+  color: #1f2328;
+  box-shadow:
+    0 24px 48px rgb(15 23 42 / 25%),
+    0 2px 6px rgb(15 23 42 / 12%);
+}
+
+.add {
+  color: #1a7f37;
+  font-weight: 700;
+}
+
+.del {
+  color: #cf222e;
+  font-weight: 700;
+}
+
+code,
+.mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}

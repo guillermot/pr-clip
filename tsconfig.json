@@ -8,5 +8,5 @@
     "exactOptionalPropertyTypes": true,
     "verbatimModuleSyntax": true
   },
-  "include": [".wxt/wxt.d.ts", "src", "tests", "*.config.ts"]
+  "include": [".wxt/wxt.d.ts", "src", "tests", "scripts", "*.config.ts"]
 }

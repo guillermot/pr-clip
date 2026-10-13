@@ -178,3 +178,7 @@ kbd {
   background: var(--surface);
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
+
+form#template-form {
+  margin-bottom: 32px;
+}
