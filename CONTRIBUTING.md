@@ -63,3 +63,12 @@ Add `public/_locales/<locale>/messages.json` with the same keys as `en`. The tes
 - For UI changes, include a screenshot.
 
 By participating you agree to follow the [Code of Conduct](CODE_OF_CONDUCT.md).
+
+## Releases
+
+Releases are automated with [release-please](https://github.com/googleapis/release-please):
+
+1. Every merge to `main` updates a **release PR** that bumps the version in `package.json`, which WXT copies into the manifest, and updates `CHANGELOG.md`.
+2. Merging the release PR tags the version, creates a GitHub Release, and attaches the store-ready zip.
+
+`feat` bumps the minor version, `fix` bumps the patch version, and `feat!`/`BREAKING CHANGE` bumps the major version. The first release is `1.0.0`.
