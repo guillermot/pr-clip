@@ -1,4 +1,4 @@
-import { templateSetting } from '@/lib/settings';
+import { githubTokenSetting, templateSetting } from '@/lib/settings';
 import {
   DEFAULT_TEMPLATE,
   PLACEHOLDERS,
@@ -21,14 +21,22 @@ const resetButton = byId('reset', HTMLButtonElement);
 const status = byId('status', HTMLSpanElement);
 const shortcut = byId('shortcut', HTMLElement);
 const openShortcuts = byId('open-shortcuts', HTMLAnchorElement);
+const tokenForm = byId('token-form', HTMLFormElement);
+const tokenInput = byId('token', HTMLInputElement);
+const removeTokenButton = byId('remove-token', HTMLButtonElement);
+const tokenStatus = byId('token-status', HTMLSpanElement);
 
 function updatePreview(): void {
   preview.value = renderTemplate(textarea.value, SAMPLE_PR);
 }
 
-function showStatus(message: string, kind: 'success' | 'error'): void {
-  status.textContent = message;
-  status.dataset.kind = kind;
+function showStatus(
+  message: string,
+  kind: 'success' | 'error',
+  target: HTMLElement = status,
+): void {
+  target.textContent = message;
+  target.dataset.kind = kind;
 }
 
 function insertPlaceholder(key: Placeholder): void {
@@ -62,6 +70,30 @@ async function save(): Promise<void> {
   showStatus('Saved.', 'success');
 }
 
+async function showTokenState(): Promise<void> {
+  const saved = (await githubTokenSetting.getValue()) !== null;
+  tokenInput.value = '';
+  tokenInput.placeholder = saved ? 'Token saved — enter a new one to replace it' : 'github_pat_…';
+  removeTokenButton.disabled = !saved;
+}
+
+async function saveToken(): Promise<void> {
+  const token = tokenInput.value.trim();
+  if (!token) {
+    showStatus('Paste a token first.', 'error', tokenStatus);
+    return;
+  }
+  await githubTokenSetting.setValue(token);
+  await showTokenState();
+  showStatus('Token saved.', 'success', tokenStatus);
+}
+
+async function removeToken(): Promise<void> {
+  await githubTokenSetting.removeValue();
+  await showTokenState();
+  showStatus('Token removed.', 'success', tokenStatus);
+}
+
 async function showShortcut(): Promise<void> {
   const commands = await browser.commands.getAll();
   const action = commands.find((command) => command.name === '_execute_action');
@@ -89,7 +121,16 @@ openShortcuts.addEventListener('click', (event) => {
   void browser.tabs.create({ url: 'chrome://extensions/shortcuts' });
 });
 
+tokenForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  void saveToken();
+});
+
+removeTokenButton.addEventListener('click', () => {
+  void removeToken();
+});
+
 renderPlaceholders();
 textarea.value = await templateSetting.getValue();
 updatePreview();
-await showShortcut();
+await Promise.all([showShortcut(), showTokenState()]);

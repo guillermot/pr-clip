@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import { copyPr, type CopyPrDeps } from '@/lib/copy-pr';
+import { GitHubApiError } from '@/lib/github-api';
 
 const PR_TAB = { id: 1, url: 'https://github.com/acme/widgets/pull/42/files' };
 
@@ -8,6 +9,7 @@ function deps(overrides: Partial<CopyPrDeps> = {}): CopyPrDeps {
     extract: vi.fn(() =>
       Promise.resolve({ title: 'Add dark mode', additions: 120, deletions: 30 }),
     ),
+    fetchDetails: vi.fn(() => Promise.reject(new Error('offline'))),
     getTemplate: () => Promise.resolve('`+{added} -{removed}` [{title}]({url})'),
     writeClipboard: vi.fn(() => Promise.resolve()),
     ...overrides,
@@ -23,6 +25,7 @@ describe('copyPr', () => {
     expect(result).toEqual({ ok: true, text });
     expect(d.extract).toHaveBeenCalledWith(1);
     expect(d.writeClipboard).toHaveBeenCalledWith(text);
+    expect(d.fetchDetails).not.toHaveBeenCalled();
   });
 
   it.each([
@@ -40,7 +43,7 @@ describe('copyPr', () => {
     { title: 'x', additions: null, deletions: 1 },
     { title: 'x', additions: 1, deletions: null },
     undefined,
-  ])('reports missing details: %o', async (extracted) => {
+  ])('reports missing details when the API also fails: %o', async (extracted) => {
     const d = deps({ extract: () => Promise.resolve(extracted) });
     expect(await copyPr(PR_TAB, d)).toEqual({ ok: false, reason: 'details-not-found' });
     expect(d.writeClipboard).not.toHaveBeenCalled();
@@ -48,6 +51,45 @@ describe('copyPr', () => {
 
   it('treats a failed injection as missing details', async () => {
     const d = deps({ extract: () => Promise.reject(new Error('Cannot access contents of url')) });
+    expect(await copyPr(PR_TAB, d)).toEqual({ ok: false, reason: 'details-not-found' });
+  });
+
+  it('falls back to the API and keeps the page title', async () => {
+    const d = deps({
+      extract: () => Promise.resolve({ title: 'From page', additions: null, deletions: null }),
+      fetchDetails: vi.fn(() => Promise.resolve({ title: 'From API', additions: 5, deletions: 2 })),
+    });
+    expect(await copyPr(PR_TAB, d)).toEqual({
+      ok: true,
+      text: '`+5 -2` [From page](https://github.com/acme/widgets/pull/42)',
+    });
+    expect(d.fetchDetails).toHaveBeenCalledWith({ owner: 'acme', repo: 'widgets', number: 42 });
+  });
+
+  it('uses the API title when the page has none', async () => {
+    const d = deps({
+      extract: () => Promise.reject(new Error('Cannot access contents of url')),
+      fetchDetails: () => Promise.resolve({ title: 'From API', additions: 5, deletions: 2 }),
+    });
+    expect(await copyPr(PR_TAB, d)).toMatchObject({
+      ok: true,
+      text: expect.stringContaining('[From API]') as string,
+    });
+  });
+
+  it.each([401, 403, 404])('asks for a token when the API answers %i', async (status) => {
+    const d = deps({
+      extract: () => Promise.resolve(undefined),
+      fetchDetails: () => Promise.reject(new GitHubApiError(status)),
+    });
+    expect(await copyPr(PR_TAB, d)).toEqual({ ok: false, reason: 'needs-token' });
+  });
+
+  it('reports other API errors as missing details', async () => {
+    const d = deps({
+      extract: () => Promise.resolve(undefined),
+      fetchDetails: () => Promise.reject(new GitHubApiError(500)),
+    });
     expect(await copyPr(PR_TAB, d)).toEqual({ ok: false, reason: 'details-not-found' });
   });
 

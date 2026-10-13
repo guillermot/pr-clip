@@ -2,12 +2,15 @@ import { flashBadge } from '@/lib/badge';
 import { writeClipboard } from '@/lib/clipboard';
 import { copyPr, type CopyPrResult } from '@/lib/copy-pr';
 import { extractPr } from '@/lib/extract-pr';
-import { templateSetting } from '@/lib/settings';
+import { fetchPrDetails } from '@/lib/github-api';
+import { githubTokenSetting, templateSetting } from '@/lib/settings';
 
 const ERROR_MESSAGES: Record<Exclude<CopyPrResult, { ok: true }>['reason'], string> = {
   'not-a-pr': 'Open a GitHub pull request to copy it.',
   'details-not-found':
     "Couldn't read the pull request details. Wait for the page to load and try again.",
+  'needs-token':
+    "Couldn't read this pull request. If the repository is private, add a GitHub token in the PR Clip options.",
   'copy-failed': "Couldn't write to the clipboard.",
 };
 
@@ -27,6 +30,7 @@ async function handleClick(tab: Browser.tabs.Tab): Promise<void> {
       });
       return injection?.result;
     },
+    fetchDetails: async (ref) => fetchPrDetails(ref, await githubTokenSetting.getValue()),
     getTemplate: () => templateSetting.getValue(),
     writeClipboard,
   });

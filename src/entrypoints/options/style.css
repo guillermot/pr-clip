@@ -86,6 +86,22 @@ textarea,
   font-size: 13px;
 }
 
+input {
+  flex: 1 1 240px;
+  box-sizing: border-box;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: inherit;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 13px;
+}
+
+a {
+  color: var(--accent);
+}
+
 textarea {
   resize: vertical;
   background: var(--bg);
@@ -93,6 +109,7 @@ textarea {
 }
 
 textarea:focus-visible,
+input:focus-visible,
 button:focus-visible,
 a:focus-visible {
   outline: 2px solid var(--accent);
@@ -146,11 +163,11 @@ button.primary {
   align-items: center;
 }
 
-#status[data-kind='success'] {
+[role='status'][data-kind='success'] {
   color: var(--success);
 }
 
-#status[data-kind='error'] {
+[role='status'][data-kind='error'] {
   color: var(--danger);
 }
 
