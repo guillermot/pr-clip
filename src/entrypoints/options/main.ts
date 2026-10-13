@@ -1,3 +1,4 @@
+import { localizeDocument, t, type MessageKey } from '@/lib/i18n';
 import { githubTokenSetting, templateSetting } from '@/lib/settings';
 import {
   DEFAULT_TEMPLATE,
@@ -6,6 +7,16 @@ import {
   SAMPLE_PR,
   type Placeholder,
 } from '@/lib/template';
+
+const PLACEHOLDER_DESCRIPTIONS: Record<Placeholder, MessageKey> = {
+  title: 'placeholderTitle',
+  url: 'placeholderUrl',
+  added: 'placeholderAdded',
+  removed: 'placeholderRemoved',
+  repo: 'placeholderRepo',
+  owner: 'placeholderOwner',
+  number: 'placeholderNumber',
+};
 
 function byId<T extends HTMLElement>(id: string, type: new () => T): T {
   const element = document.getElementById(id);
@@ -30,12 +41,8 @@ function updatePreview(): void {
   preview.value = renderTemplate(textarea.value, SAMPLE_PR);
 }
 
-function showStatus(
-  message: string,
-  kind: 'success' | 'error',
-  target: HTMLElement = status,
-): void {
-  target.textContent = message;
+function showStatus(target: HTMLElement, key: MessageKey, kind: 'success' | 'error'): void {
+  target.textContent = t(key);
   target.dataset.kind = kind;
 }
 
@@ -46,11 +53,11 @@ function insertPlaceholder(key: Placeholder): void {
 }
 
 function renderPlaceholders(): void {
-  for (const [key, description] of Object.entries(PLACEHOLDERS) as [Placeholder, string][]) {
+  for (const key of PLACEHOLDERS) {
     const button = document.createElement('button');
     button.type = 'button';
     button.textContent = `{${key}}`;
-    button.title = description;
+    button.title = t(PLACEHOLDER_DESCRIPTIONS[key]);
     button.addEventListener('click', () => {
       insertPlaceholder(key);
     });
@@ -60,44 +67,44 @@ function renderPlaceholders(): void {
   }
 }
 
-async function save(): Promise<void> {
+async function saveTemplate(): Promise<void> {
   const template = textarea.value.trim();
   if (!template) {
-    showStatus('The template can’t be empty.', 'error');
+    showStatus(status, 'statusTemplateEmpty', 'error');
     return;
   }
   await templateSetting.setValue(template);
-  showStatus('Saved.', 'success');
+  showStatus(status, 'statusSaved', 'success');
 }
 
 async function showTokenState(): Promise<void> {
   const saved = (await githubTokenSetting.getValue()) !== null;
   tokenInput.value = '';
-  tokenInput.placeholder = saved ? 'Token saved — enter a new one to replace it' : 'github_pat_…';
+  tokenInput.placeholder = t(saved ? 'tokenSavedPlaceholder' : 'tokenPlaceholder');
   removeTokenButton.disabled = !saved;
 }
 
 async function saveToken(): Promise<void> {
   const token = tokenInput.value.trim();
   if (!token) {
-    showStatus('Paste a token first.', 'error', tokenStatus);
+    showStatus(tokenStatus, 'statusTokenMissing', 'error');
     return;
   }
   await githubTokenSetting.setValue(token);
   await showTokenState();
-  showStatus('Token saved.', 'success', tokenStatus);
+  showStatus(tokenStatus, 'statusTokenSaved', 'success');
 }
 
 async function removeToken(): Promise<void> {
   await githubTokenSetting.removeValue();
   await showTokenState();
-  showStatus('Token removed.', 'success', tokenStatus);
+  showStatus(tokenStatus, 'statusTokenRemoved', 'success');
 }
 
 async function showShortcut(): Promise<void> {
   const commands = await browser.commands.getAll();
   const action = commands.find((command) => command.name === '_execute_action');
-  shortcut.textContent = action?.shortcut || 'Not set';
+  shortcut.textContent = action?.shortcut || t('shortcutNotSet');
 }
 
 textarea.addEventListener('input', () => {
@@ -107,13 +114,13 @@ textarea.addEventListener('input', () => {
 
 form.addEventListener('submit', (event) => {
   event.preventDefault();
-  void save();
+  void saveTemplate();
 });
 
 resetButton.addEventListener('click', () => {
   textarea.value = DEFAULT_TEMPLATE;
   updatePreview();
-  void save();
+  void saveTemplate();
 });
 
 openShortcuts.addEventListener('click', (event) => {
@@ -130,6 +137,8 @@ removeTokenButton.addEventListener('click', () => {
   void removeToken();
 });
 
+document.documentElement.lang = browser.i18n.getUILanguage();
+localizeDocument();
 renderPlaceholders();
 textarea.value = await templateSetting.getValue();
 updatePreview();
