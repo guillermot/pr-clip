@@ -9,7 +9,7 @@ export default defineConfig({
     description:
       'Copy a GitHub pull request as a clean, shareable one-liner for chat apps like Slack.',
     homepage_url: 'https://github.com/guillermot/pr-clip',
-    permissions: ['activeTab', 'scripting', 'clipboardWrite', 'offscreen'],
+    permissions: ['activeTab', 'scripting', 'clipboardWrite', 'offscreen', 'storage'],
     action: {
       default_title: ACTION_TITLE,
     },

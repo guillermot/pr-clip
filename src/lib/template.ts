@@ -13,6 +13,16 @@ export const PLACEHOLDERS = {
   number: 'Pull request number',
 } as const;
 
+/** Example PR used to preview templates. */
+export const SAMPLE_PR: PrData = {
+  owner: 'acme',
+  repo: 'widgets',
+  number: 42,
+  title: 'Add dark mode to the settings page',
+  additions: 120,
+  deletions: 30,
+};
+
 export type Placeholder = keyof typeof PLACEHOLDERS;
 
 function isPlaceholder(key: string): key is Placeholder {
