@@ -13,6 +13,13 @@ export default tseslint.config(
       globals: { ...globals.browser, ...globals.webextensions },
       parserOptions: { projectService: true, tsconfigRootDir: import.meta.dirname },
     },
+    rules: {
+      // `text || null` intentionally turns empty strings into null.
+      '@typescript-eslint/prefer-nullish-coalescing': [
+        'error',
+        { ignorePrimitives: { string: true } },
+      ],
+    },
   },
   {
     files: ['**/*.js'],
