@@ -45,6 +45,35 @@
           <a href="#" id="open-shortcuts">Change</a>
         </p>
       </section>
+
+      <section>
+        <h2>GitHub token <span class="muted">(optional)</span></h2>
+        <p class="muted">
+          PR Clip reads details from the page and falls back to the GitHub API when it can’t.
+          Private repositories need a
+          <a
+            href="https://github.com/settings/personal-access-tokens/new"
+            target="_blank"
+            rel="noopener"
+            >fine-grained token</a
+          >
+          with read-only <em>Pull requests</em> access. It’s stored only on this device and sent
+          only to <code>api.github.com</code>.
+        </p>
+        <form id="token-form" class="actions">
+          <input
+            id="token"
+            type="password"
+            autocomplete="off"
+            spellcheck="false"
+            placeholder="github_pat_…"
+            aria-label="GitHub token"
+          />
+          <button type="submit" class="primary">Save token</button>
+          <button type="button" id="remove-token">Remove</button>
+          <span id="token-status" role="status" class="muted"></span>
+        </form>
+      </section>
     </main>
     <script type="module" src="./main.ts"></script>
   </body>
