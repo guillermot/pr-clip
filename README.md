@@ -21,6 +21,8 @@ In Slack that renders as the `:github:` emoji, the diff size, and the PR title l
 - **Private by design.** No analytics, no servers, and no access to any site until you click the icon.
 - English and Spanish UI.
 
+![PR Clip: copy a pull request and paste it in chat](store/assets/screenshot-1-hero.png)
+
 ## Install
 
 - **Chrome Web Store:** coming soon.
@@ -69,6 +71,10 @@ PR Clip has no access to any website until you click it.
 ## Contributing
 
 Bug reports and pull requests are welcome. GitHub changes its markup from time to time, and [CONTRIBUTING.md](CONTRIBUTING.md) explains how to fix the extension when that happens.
+
+## Privacy
+
+See the [privacy policy](docs/PRIVACY.md). In short, PR Clip collects nothing.
 
 ## License
 

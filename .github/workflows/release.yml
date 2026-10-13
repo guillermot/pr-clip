@@ -45,3 +45,34 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ needs.release-please.outputs.tag_name }}
+
+  publish:
+    name: Submit to Chrome Web Store
+    needs: [release-please, package]
+    runs-on: ubuntu-latest
+    env:
+      CHROME_EXTENSION_ID: ${{ secrets.CHROME_EXTENSION_ID }}
+    steps:
+      - name: Skip until Store credentials are configured
+        if: env.CHROME_EXTENSION_ID == ''
+        run: echo "::notice::CHROME_EXTENSION_ID is not set; skipping Chrome Web Store submission. See docs/PUBLISHING.md."
+      - uses: actions/checkout@v7
+        if: env.CHROME_EXTENSION_ID != ''
+      - uses: pnpm/action-setup@v6
+        if: env.CHROME_EXTENSION_ID != ''
+      - uses: actions/setup-node@v7
+        if: env.CHROME_EXTENSION_ID != ''
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - if: env.CHROME_EXTENSION_ID != ''
+        run: pnpm install --frozen-lockfile
+      - if: env.CHROME_EXTENSION_ID != ''
+        run: pnpm zip
+      - name: Upload and submit for review
+        if: env.CHROME_EXTENSION_ID != ''
+        run: pnpm exec wxt submit --chrome-api-version v2 --chrome-zip .output/*-chrome.zip
+        env:
+          CHROME_PUBLISHER_ID: ${{ secrets.CHROME_PUBLISHER_ID }}
+          CHROME_SERVICE_ACCOUNT_CLIENT_EMAIL: ${{ secrets.CHROME_SERVICE_ACCOUNT_CLIENT_EMAIL }}
+          CHROME_SERVICE_ACCOUNT_PRIVATE_KEY: ${{ secrets.CHROME_SERVICE_ACCOUNT_PRIVATE_KEY }}

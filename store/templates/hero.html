@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="base.css" />
+    <style>
+      .stage {
+        width: 1280px;
+        height: 800px;
+        display: grid;
+        grid-template-columns: 430px 1fr;
+        gap: 56px;
+        align-items: center;
+        padding: 0 72px;
+      }
+      .brand {
+        font-size: 34px;
+        margin-bottom: 28px;
+      }
+      h1 {
+        margin: 0 0 18px;
+        font-size: 50px;
+        line-height: 1.08;
+        letter-spacing: -0.02em;
+      }
+      .lead {
+        margin: 0 0 30px;
+        font-size: 21px;
+        line-height: 1.45;
+        opacity: 0.92;
+      }
+      kbd {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 8px;
+        background: rgb(255 255 255 / 18%);
+        border: 1px solid rgb(255 255 255 / 35%);
+        font:
+          600 17px ui-monospace,
+          Menlo,
+          monospace;
+      }
+      .flow {
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+      }
+      .browser .bar {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        border-bottom: 1px solid #e5e7eb;
+        background: #f6f8fa;
+        border-radius: 14px 14px 0 0;
+      }
+      .dots span {
+        display: inline-block;
+        width: 11px;
+        height: 11px;
+        margin-right: 6px;
+        border-radius: 50%;
+        background: #d0d7de;
+      }
+      .url {
+        flex: 1;
+        padding: 6px 14px;
+        border-radius: 999px;
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        color: #59636e;
+        font-size: 14px;
+      }
+      .ext {
+        position: relative;
+      }
+      .ext img {
+        display: block;
+        border-radius: 6px;
+        outline: 3px solid #a5b4fc;
+        outline-offset: 2px;
+      }
+      .badge {
+        position: absolute;
+        right: -9px;
+        bottom: -7px;
+        padding: 1px 5px;
+        border-radius: 6px;
+        background: #1a7f37;
+        color: #fff;
+        font-size: 12px;
+        font-weight: 700;
+      }
+      .pr {
+        padding: 22px 26px 26px;
+      }
+      .pr h2 {
+        margin: 0 0 12px;
+        font-size: 26px;
+        font-weight: 600;
+      }
+      .pr h2 span {
+        color: #59636e;
+        font-weight: 400;
+      }
+      .meta {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: #59636e;
+        font-size: 15px;
+      }
+      .state {
+        padding: 5px 12px;
+        border-radius: 999px;
+        background: #1f883d;
+        color: #fff;
+        font-weight: 600;
+      }
+      .tabs {
+        display: flex;
+        gap: 22px;
+        align-items: center;
+        margin-top: 18px;
+        padding-top: 14px;
+        border-top: 1px solid #e5e7eb;
+        color: #59636e;
+        font-size: 15px;
+      }
+      .tabs .stats {
+        margin-left: auto;
+        font-size: 15px;
+      }
+      .arrow {
+        align-self: center;
+        padding: 8px 18px;
+        border-radius: 999px;
+        background: rgb(255 255 255 / 18%);
+        font-size: 17px;
+        font-weight: 600;
+      }
+      .chat {
+        display: flex;
+        gap: 14px;
+        padding: 22px 26px;
+      }
+      .avatar {
+        flex: none;
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, #f59e0b, #ef4444);
+      }
+      .name {
+        margin-bottom: 4px;
+        font-weight: 700;
+        font-size: 16px;
+      }
+      .name span {
+        margin-left: 6px;
+        color: #6b7280;
+        font-weight: 400;
+        font-size: 13px;
+      }
+      .message {
+        font-size: 18px;
+        line-height: 1.5;
+      }
+      .emoji {
+        display: inline-grid;
+        place-items: center;
+        width: 22px;
+        height: 22px;
+        margin-right: 4px;
+        border-radius: 50%;
+        background: #24292f;
+        color: #fff;
+        font-size: 11px;
+        vertical-align: -3px;
+      }
+      .message code {
+        padding: 2px 6px;
+        border: 1px solid #e5e7eb;
+        border-radius: 5px;
+        background: #f6f8fa;
+        color: #c2410c;
+        font-size: 15px;
+      }
+      .message a {
+        color: #1d4ed8;
+        font-weight: 600;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="stage">
+      <div>
+        <div class="brand">
+          <img src="../assets/icon-128.png" width="60" height="60" alt="" />PR Clip
+        </div>
+        <h1>Share pull requests in one click</h1>
+        <p class="lead">
+          Copy the title, link and size of any pull request as a tidy one-liner, ready to paste into
+          your team chat.
+        </p>
+        <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>C</kbd>
+      </div>
+
+      <div class="flow">
+        <div class="card browser">
+          <div class="bar">
+            <div class="dots"><span></span><span></span><span></span></div>
+            <div class="url">github.com/acme/widgets/pull/42</div>
+            <div class="ext">
+              <img src="../../public/icon/32.png" width="26" height="26" alt="" />
+              <span class="badge">✓</span>
+            </div>
+          </div>
+          <div class="pr">
+            <h2>Add dark mode to the settings page <span>#42</span></h2>
+            <div class="meta">
+              <span class="state">Open</span> wants to merge 3 commits into main
+            </div>
+            <div class="tabs">
+              <span>Conversation</span><span>Commits</span><span>Files changed</span>
+              <span class="stats mono"
+                ><span class="add">+120</span> <span class="del">-30</span></span
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="arrow">Paste in chat ↓</div>
+
+        <div class="card chat">
+          <div class="avatar"></div>
+          <div>
+            <div class="name">You <span>10:42 AM</span></div>
+            <div class="message">
+              <span class="emoji">&lt;/&gt;</span>
+              <code>+120 -30</code>
+              <a href="#">Add dark mode to the settings page</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
