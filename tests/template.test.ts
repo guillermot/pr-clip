@@ -19,9 +19,7 @@ describe('renderTemplate', () => {
   });
 
   it('supports every placeholder', () => {
-    const template = Object.keys(PLACEHOLDERS)
-      .map((key) => `{${key}}`)
-      .join('|');
+    const template = PLACEHOLDERS.map((key) => `{${key}}`).join('|');
     expect(renderTemplate(template, pr)).toBe(
       'Add dark mode|https://github.com/facebook/react/pull/123|120|30|facebook/react|facebook|123',
     );

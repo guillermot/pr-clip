@@ -1,0 +1,59 @@
+{
+  "extName": { "message": "PR Clip" },
+  "extDescription": {
+    "message": "Copia un pull request de GitHub como una línea clara y fácil de compartir en apps de chat como Slack."
+  },
+  "actionTitle": { "message": "Copiar pull request para el chat" },
+  "commandCopy": { "message": "Copiar el pull request actual" },
+
+  "badgeCopied": {
+    "message": "Copiado: $TEXT$",
+    "placeholders": { "text": { "content": "$1", "example": "+7 -3 Fix login" } }
+  },
+  "errorNotAPr": { "message": "Abre un pull request de GitHub para copiarlo." },
+  "errorDetailsNotFound": {
+    "message": "No se pudieron leer los datos del pull request. Espera a que cargue la página e inténtalo de nuevo."
+  },
+  "errorNeedsToken": {
+    "message": "No se pudo leer este pull request. Si el repositorio es privado, agrega un token de GitHub en las opciones de PR Clip."
+  },
+  "errorCopyFailed": { "message": "No se pudo escribir en el portapapeles." },
+
+  "optionsTitle": { "message": "Opciones de PR Clip" },
+  "optionsSubtitle": { "message": "Elige cómo se copian los pull requests." },
+  "templateHeading": { "message": "Plantilla del mensaje" },
+  "placeholderHint": { "message": "Haz clic en una variable para insertarla:" },
+  "previewHeading": { "message": "Vista previa" },
+  "save": { "message": "Guardar" },
+  "resetToDefault": { "message": "Restablecer" },
+  "statusSaved": { "message": "Guardado." },
+  "statusTemplateEmpty": { "message": "La plantilla no puede estar vacía." },
+
+  "shortcutHeading": { "message": "Atajo de teclado" },
+  "shortcutCurrent": { "message": "Atajo actual:" },
+  "shortcutNotSet": { "message": "Sin asignar" },
+  "shortcutChange": { "message": "Cambiar" },
+
+  "tokenHeading": { "message": "Token de GitHub" },
+  "optional": { "message": "(opcional)" },
+  "tokenDescription": {
+    "message": "PR Clip lee los datos de la página y, si no puede, usa la API de GitHub. Los repositorios privados necesitan un token fine-grained con acceso de solo lectura a \"Pull requests\". Se guarda solo en este dispositivo y solo se envía a api.github.com."
+  },
+  "tokenCreateLink": { "message": "Crear un token fine-grained" },
+  "tokenLabel": { "message": "Token de GitHub" },
+  "tokenPlaceholder": { "message": "github_pat_…" },
+  "tokenSavedPlaceholder": { "message": "Token guardado — ingresa uno nuevo para reemplazarlo" },
+  "saveToken": { "message": "Guardar token" },
+  "removeToken": { "message": "Eliminar" },
+  "statusTokenMissing": { "message": "Primero pega un token." },
+  "statusTokenSaved": { "message": "Token guardado." },
+  "statusTokenRemoved": { "message": "Token eliminado." },
+
+  "placeholderTitle": { "message": "Título del pull request" },
+  "placeholderUrl": { "message": "Link al pull request" },
+  "placeholderAdded": { "message": "Líneas agregadas" },
+  "placeholderRemoved": { "message": "Líneas eliminadas" },
+  "placeholderRepo": { "message": "Repositorio, como owner/nombre" },
+  "placeholderOwner": { "message": "Dueño del repositorio (usuario u organización)" },
+  "placeholderNumber": { "message": "Número del pull request" }
+}

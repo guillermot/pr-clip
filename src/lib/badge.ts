@@ -1,4 +1,4 @@
-import { ACTION_TITLE } from '@/constants';
+import { t } from './i18n';
 
 const RESET_AFTER_MS = 2500;
 
@@ -22,6 +22,6 @@ export async function flashBadge(
 
   setTimeout(() => {
     void browser.action.setBadgeText({ tabId, text: '' });
-    void browser.action.setTitle({ tabId, title: ACTION_TITLE });
+    void browser.action.setTitle({ tabId, title: t('actionTitle') });
   }, RESET_AFTER_MS);
 }

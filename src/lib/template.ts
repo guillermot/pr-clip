@@ -3,15 +3,15 @@ import { canonicalPrUrl } from './pr-url';
 
 export const DEFAULT_TEMPLATE = ':github: `+{added} -{removed}` [{title}]({url})';
 
-export const PLACEHOLDERS = {
-  title: 'Pull request title',
-  url: 'Link to the pull request',
-  added: 'Lines added',
-  removed: 'Lines removed',
-  repo: 'Repository, as owner/name',
-  owner: 'Repository owner (user or organization)',
-  number: 'Pull request number',
-} as const;
+export const PLACEHOLDERS = [
+  'title',
+  'url',
+  'added',
+  'removed',
+  'repo',
+  'owner',
+  'number',
+] as const;
 
 /** Example PR used to preview templates. */
 export const SAMPLE_PR: PrData = {
@@ -23,10 +23,10 @@ export const SAMPLE_PR: PrData = {
   deletions: 30,
 };
 
-export type Placeholder = keyof typeof PLACEHOLDERS;
+export type Placeholder = (typeof PLACEHOLDERS)[number];
 
 function isPlaceholder(key: string): key is Placeholder {
-  return Object.hasOwn(PLACEHOLDERS, key);
+  return (PLACEHOLDERS as readonly string[]).includes(key);
 }
 
 export function placeholderValues(pr: PrData): Record<Placeholder, string> {

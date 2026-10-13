@@ -1,0 +1,59 @@
+{
+  "extName": { "message": "PR Clip" },
+  "extDescription": {
+    "message": "Copy a GitHub pull request as a clean, shareable one-liner for chat apps like Slack."
+  },
+  "actionTitle": { "message": "Copy pull request for chat" },
+  "commandCopy": { "message": "Copy the current pull request" },
+
+  "badgeCopied": {
+    "message": "Copied: $TEXT$",
+    "placeholders": { "text": { "content": "$1", "example": "+7 -3 Fix login" } }
+  },
+  "errorNotAPr": { "message": "Open a GitHub pull request to copy it." },
+  "errorDetailsNotFound": {
+    "message": "Couldn't read the pull request details. Wait for the page to load and try again."
+  },
+  "errorNeedsToken": {
+    "message": "Couldn't read this pull request. If the repository is private, add a GitHub token in the PR Clip options."
+  },
+  "errorCopyFailed": { "message": "Couldn't write to the clipboard." },
+
+  "optionsTitle": { "message": "PR Clip options" },
+  "optionsSubtitle": { "message": "Choose how pull requests are copied." },
+  "templateHeading": { "message": "Message template" },
+  "placeholderHint": { "message": "Click a placeholder to insert it:" },
+  "previewHeading": { "message": "Preview" },
+  "save": { "message": "Save" },
+  "resetToDefault": { "message": "Reset to default" },
+  "statusSaved": { "message": "Saved." },
+  "statusTemplateEmpty": { "message": "The template can't be empty." },
+
+  "shortcutHeading": { "message": "Keyboard shortcut" },
+  "shortcutCurrent": { "message": "Current shortcut:" },
+  "shortcutNotSet": { "message": "Not set" },
+  "shortcutChange": { "message": "Change" },
+
+  "tokenHeading": { "message": "GitHub token" },
+  "optional": { "message": "(optional)" },
+  "tokenDescription": {
+    "message": "PR Clip reads details from the page and falls back to the GitHub API when it can't. Private repositories need a fine-grained token with read-only \"Pull requests\" access. It's stored only on this device and sent only to api.github.com."
+  },
+  "tokenCreateLink": { "message": "Create a fine-grained token" },
+  "tokenLabel": { "message": "GitHub token" },
+  "tokenPlaceholder": { "message": "github_pat_…" },
+  "tokenSavedPlaceholder": { "message": "Token saved — enter a new one to replace it" },
+  "saveToken": { "message": "Save token" },
+  "removeToken": { "message": "Remove" },
+  "statusTokenMissing": { "message": "Paste a token first." },
+  "statusTokenSaved": { "message": "Token saved." },
+  "statusTokenRemoved": { "message": "Token removed." },
+
+  "placeholderTitle": { "message": "Pull request title" },
+  "placeholderUrl": { "message": "Link to the pull request" },
+  "placeholderAdded": { "message": "Lines added" },
+  "placeholderRemoved": { "message": "Lines removed" },
+  "placeholderRepo": { "message": "Repository, as owner/name" },
+  "placeholderOwner": { "message": "Repository owner (user or organization)" },
+  "placeholderNumber": { "message": "Pull request number" }
+}
